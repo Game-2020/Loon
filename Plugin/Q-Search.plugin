@@ -1,7 +1,7 @@
 #!name = 快捷搜索
 #!desc = Safari快速切换搜索引擎
 #!author = 墨鱼
-#!homepage = https://gitlab.com/lodepuly/vpn_tool/-/tree/main/Tool/Loon/Plugin
+#!homepage = https://github.com/Game-2020/Loon/blob/main/Plugin
 #!icon = https://gitlab.com/lodepuly/iconlibrary/-/raw/master/App_icon/120px/Safari.png
 #!date = 2023-09-08 13:48:55
 
@@ -15,9 +15,7 @@
 # - 公众号墨鱼手记
 # - 如需引用请注明出处-> https://t.me/ddgksf2021 谢谢合作！
 # - https://github.com/ddgksf2013/Rewrite/raw/master/Html/Q-Search.conf
-##############################################
-
-hostname = duckduckgo.com
+#############################################
 
 
 
@@ -173,3 +171,7 @@ hostname = duckduckgo.com
 ^https:\/\/duckduckgo.com\/\?q=([^+]+)\+ios.+ url 302 https://www.qimai.cn/search/index/search/$1
 #     xxx （无指令默认为 Google）
 ^https:\/\/duckduckgo.com\/\?q=([^&]+).+ url 302 https://www.google.com/search?q=$1
+
+
+[Mitm]
+hostname = duckduckgo.com
