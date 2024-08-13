@@ -1,8 +1,8 @@
 #!name = FainTV
-#!desc = 解锁会员去广告
+#!desc = 会员去广告
 #!openUrl = https://apps.apple.com/
 #!author = X
-#!tag = xeme
+#!tag = 会员
 #!system = iOS
 #!system_version = 
 #!loon_version = 3.2.1(732)
