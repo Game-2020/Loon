@@ -1,7 +1,7 @@
 #!name = 百度地图净化
 #!desc = 如果广告仍然存在请清除缓存或卸载应用重新安装
 #!openUrl = https://apps.apple.com/
-#!author = 墨鱼
+#!author = xeme
 #!tag = 去广告
 #!system = iOS
 #!system_version = 
