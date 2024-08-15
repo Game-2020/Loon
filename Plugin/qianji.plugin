@@ -12,7 +12,7 @@
 #!category = G
 
 [Script]
-http-response ^https:\/\/api\.qianjiapp\.com\/vip\/configios script-path=https://raw.githubusercontent.com/Game-2020/Loon/main/Script/qianji.js, requires-body=true, timeout=60, tag=qianji
+http-response ^https:\/\/api\.qianjiapp\.com\/vip\/configios script-path=https://raw.githubusercontent.com/Game-2020/Loon/main/Script/qianji.js, requires-body=true, timeout=60, tag=钱迹
 
 [MITM]
 hostname = api.qianjiapp.com
