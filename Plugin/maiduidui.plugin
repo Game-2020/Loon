@@ -1,0 +1,25 @@
+#!name = 埋堆堆
+#!desc = 去广告
+#!openUrl = https://apps.apple.com/
+#!author = Kuraki
+#!tag = 去广告
+#!system = iOS
+#!system_version = 
+#!loon_version = 3.2.1(732)
+#!homepage = https://t.me/Aa28413761
+#!icon = https://raw.githubusercontent.com/Game-2020/icon/main/maiduidui.png
+#!date = 2024-08-15 00:00:00
+#!category = G
+
+[Rewrite]
+^https?:\/\/mob\.mddcloud\.com\.cn\/adApi\/advert\/(first|third)part\/advertList - reject-dict
+^https?:\/\/t-dsp\.pinduoduo\.com - reject-200
+^https?:\/\/mobads-pre-config\.cdn\.bcebos\.com\/preload\.php - reject-200
+^http?:\/\/sfo\.mddcloud\.com\.cn\/api\/v2\/sfo\/popup_displays? - reject-dict
+^https?:\/\/tower\.ubixioe\.com\/mob\/mediation - reject
+^https?:\/\/toblog\.ctobsnssdk\.com - reject-200
+^https?:\/\/conf-darwin\.xycdn\.com - reject-dict
+^https?:\/\/sdk1xyajs\.data\.kuiniuca\.com - reject
+
+[MITM]
+hostname = sfo.mddcloud.com.cn, mob.mddcloud.com.cn, toblog.ctobsnssdk.com, t-dsp.pinduoduo.com, mobads-pre-config.cdn.bcebos.com, sdk1xyajs.data.kuiniuca.com, conf-darwin.xycdn.com, *.ubixioe.com
