@@ -1,14 +1,15 @@
 #!name = 海豚记账本
-#!desc = 解锁会员
+#!desc = 会员
 #!openUrl = https://apps.apple.com/
 #!author = X
-#!tag = xeme
+#!tag = 会员
 #!system = iOS
 #!system_version = 
 #!loon_version = 3.2.1(732)
 #!homepage = https://github.com/
 #!icon = https://raw.githubusercontent.com/deezertidal/private/main/icons/htjzb.png
-#!date = 2024-08-13 00:00:00
+#!date = 2024-08-15 00:00:00
+#!category = G
 
 [Script]
 http-response https:\/\/book\.haitunwallet\.com\/app\/vip\/status requires-body=1 ,script-path=https://raw.githubusercontent.com/deezertidal/shadowrocket-rules/main/js/htjzb.js
