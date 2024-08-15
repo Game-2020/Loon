@@ -1,5 +1,6 @@
 #!name = RevenueCat
-#!desc = 解锁是暂时的，购买也不是永久的[订阅、跑路]unlockapplist https://appraven.net/collection/77299969
+#!desc = 解锁是暂时的，购买也不是永久的[订阅、跑路]
+unlockapplist https://appraven.net/collection/77299969
 #!openUrl = https://apps.apple.com/
 #!author = 墨鱼
 #!tag = 会员
