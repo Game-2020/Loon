@@ -1,5 +1,9 @@
+/*
+
 来源https://t.me/Aa28413761
 #投稿 @Kuraki 
+
+*/
 
 # 埋堆堆
 ^https?:\/\/mob\.mddcloud\.com\.cn\/adApi\/advert\/(first|third)part\/advertList url reject-dict
