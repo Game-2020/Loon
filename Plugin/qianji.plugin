@@ -1,0 +1,18 @@
+#!name = 钱迹
+#!desc = 会员
+#!openUrl = https://apps.apple.com/
+#!author = pdx6318
+#!tag = 会员
+#!system = iOS
+#!system_version = 
+#!loon_version = 3.2.1(732)
+#!homepage = https://github.com/pdx6318
+#!icon = https://raw.githubusercontent.com/Game-2020/icon/main/qianji.png
+#!date = 2024-08-15 00:00:00
+#!category = G
+
+[Script]
+http-response ^https:\/\/api\.qianjiapp\.com\/vip\/configios script-path=https://raw.githubusercontent.com/Game-2020/Loon/main/Script/qianji.js, requires-body=true, timeout=60, tag=qianji
+
+[MITM]
+hostname = api.qianjiapp.com
