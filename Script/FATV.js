@@ -1,8 +1,5 @@
 /*
-微信公众号：ios黑科技
-官方网站：s7aa.cn
 
-圈X：
 [rewrite_local]
 #FainTV解锁会员去广告
 ^http:\/\/ftvn\.hawsing\.com\.tw:3000\/client\/login url script-response-body fatv.js
