@@ -1,0 +1,18 @@
+#!name = ProKnockout
+#!desc = 会员,不需要时禁用
+#!openUrl = https://apps.apple.com/
+#!author = 彭于晏
+#!tag = 会员
+#!system = iOS
+#!system_version = 
+#!loon_version = 3.2.1(732)
+#!homepage = https://t.me/py996
+#!icon = https://raw.githubusercontent.com/Game-2020/icon/main/ProKnockout.png
+#!date = 2024-08-15 00:00:00
+#!category = G
+
+[Script]
+http-response ^https:\/\/buy\.itunes\.apple\.com\/verifyReceipt script-path=https://raw.githubusercontent.com/89996462/Quantumult-X/main/ycdz/Proknockout.js, requires-body=true, timeout=60, tag=ProKnockout
+
+[MITM]
+hostname = buy.itunes.apple.com
