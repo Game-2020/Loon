@@ -1,6 +1,6 @@
 #!name = AppCollection
 #!desc = 使用方法：先开脚本再打开App，自动会生效，如果无效就关了重开或者按一下恢复购买，在还不行就卸载App重新安装！最后还不行的话就是脚本失效了！
-#!openUrl = https://too.st/CollectionsAPP
+#!openUrl = https://github.com/chxm1023/Rewrite/blob/chxm1023/README.md
 #!author = chxm1023
 #!tag = 会员
 #!system = iOS
@@ -21,8 +21,6 @@
 # 解决方法：关[MITM][脚本][代理工具]方法选一即可
 
 # 更新日期：2023-12-24
-
-# 已解锁App下载地址：https://too.st/iTunes
 
 #=============UserScript=============#
 
