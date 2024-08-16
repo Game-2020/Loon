@@ -1,0 +1,18 @@
+#!name = iTunes合集
+#!desc = Cute手账、BuBu手账、卡卡手账、猫咪手账、恋恋手账、人生笔记、貔貅记账、Daylio日记、Lister、Nutrilio、Chat Smith、Mindkit、Metion、Miary、亚瑟浏览器、小日常
+#!openUrl = https://apps.apple.com/
+#!author = Yu9191
+#!tag = 会员
+#!system = iOS
+#!system_version = 
+#!loon_version = 3.2.1(732)
+#!homepage = https://github.com/Yu9191
+#!icon = https://raw.githubusercontent.com/Game-2020/icon/main/AppRaven.png
+#!date = 2024-08-15 00:00:00
+#!category = G
+
+[Script]
+http-response ^https?:\/\/buy\.itunes\.apple\.com\/verifyReceipt$ script-path=https://raw.githubusercontent.com/Yu9191/Rewrite/main/iTunes.js, requires-body=true, timeout=60, tag=iTunes
+
+[MITM]
+hostname = buy.itunes.apple.com
