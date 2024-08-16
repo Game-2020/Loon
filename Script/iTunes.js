@@ -2,8 +2,8 @@
 
 项目名称：iTunes合集（此合集只包含9.12及以后的软件）
 软件版本：截止2023.9.9最新版(每一个下载地址对应一个uaProductMapping)
-下载地址：yoyo手账 https://is.gd/ko2CKP
-下载地址：bubu手账 https://is.gd/ct0H6d
+下载地址：Cute手账 https://is.gd/ko2CKP
+下载地址：BuBu手账 https://is.gd/ct0H6d
 下载地址：卡卡手账 https://is.gd/XNHXGk
 下载地址：猫咪手账 https://is.gd/BKK3dy
 下载地址：恋恋手账 https://is.gd/sTVJED
@@ -12,13 +12,12 @@
 下载地址：Lister https://t.cn/A6OJJfW5 1.0.1
 下载地址：Daylio日记 https://t.cn/A65221md 1.52.2
 下载地址：Nutrilio https://t.cn/A6O6zTMN 1.18.0
-下载地址：chat smith https://t.cn/A6OC5HGz
-下载地址：mindkit https://t.cn/A6WPOgAW
-下载地址：亚瑟浏览器 11.6
-下载地址：Metion 商店3.50
-下载地址：小日常 商店7.22
+下载地址：Chat Smith https://t.cn/A6OC5HGz
+下载地址：Mindkit https://t.cn/A6WPOgAW
 下载地址：Miary: 记录你的日记和情绪
-
+下载地址：Metion 商店 3.50
+下载地址：亚瑟浏览器 商店 11.6
+下载地址：小日常 商店 7.22
 
 使用声明：⚠️仅供参考，🈲️转载与售卖！
 
