@@ -25,7 +25,7 @@ pdx.data.config.userinfo.vipstart = 2024-03-05;  
 
 pdx.data.config.userinfo.viptype =100;//永久会员
 
-pdx.data.config.userinfo.name = "派大星破解vip";
+pdx.data.config.userinfo.name = "派大星ViP";
 
 
 
