@@ -1,0 +1,19 @@
+#!name = 拦截猫
+#!desc = 解锁订阅
+#!openUrl = https://apps.apple.com/
+#!author = 彭于晏💞
+#!tag = 会员
+#!system = iOS
+#!system_version = 
+#!loon_version = 3.2.1(732)
+#!homepage = https://t.me/py996
+#!icon = https://raw.githubusercontent.com/Game-2020/icon/main/WasteCat.png
+#!date = 2024-08-20 00:00:00
+#!category = G
+
+
+[Script]
+http-response ^https:\/\/buy\.itunes\.apple\.com\/verifyReceipt script-path=https://raw.githubusercontent.com/Game-2020/Loon/main/Script/WasteCat.js, requires-body=true, timeout=60, tag=WasteCat
+
+[MITM]
+hostname = buy.itunes.apple.com
