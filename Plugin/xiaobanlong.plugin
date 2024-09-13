@@ -1,0 +1,18 @@
+#!desc=小伴龙
+#!desc = 会员
+#!openUrl = https://apps.apple.com/
+#!author = Yu9191
+#!tag = 会员
+#!system = iOS
+#!system_version = 
+#!loon_version = 3.2.1(732)
+#!homepage = https://github.com/Yu9191
+#!icon = https://raw.githubusercontent.com/Game-2020/icon/main/xiaobanlong.png
+#!date = 2024-09-12 00:00:00
+#!category = G
+
+[Script]
+http-response ^https:\/\/xbl(?:pay|math|satellite)\.youban\.com script-path=https://raw.githubusercontent.com/Yu9191/Rewrite/main/xbl.js, requires-body=true, timeout=60, tag=xbl
+
+[MITM]
+hostname = *.youban.fun
