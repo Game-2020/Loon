@@ -1,4 +1,9 @@
 payload:
+#UZ影视
+ - DOMAIN, infuseku.xyz, bixbiy.com
+
+
+#XPTV
 #已标注了大部分可直连的地址,遇到无法直连的情况自行调整
  - DOMAIN-SUFFIX, xptvhelper.link
 #XPTV主站-部分地区可以直连自行尝试
