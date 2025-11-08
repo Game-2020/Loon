@@ -115,6 +115,10 @@ payload:
  - DOMAIN-SUFFIX, bytetos.com
 #烧火影视主页
  - DOMAIN, saohuo.tv
+
+#18影视
+ - DOMAIN-KEYWORD, missav
+
 #播放
  - DOMAIN, hhjx.hhplayer.comundefined
  - DOMAIN-SUFFIX, video.iqiyi.com
