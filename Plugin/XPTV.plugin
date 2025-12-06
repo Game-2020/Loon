@@ -1,6 +1,14 @@
-#!url=https://raw.githubusercontent.com/fangkuia/XPTV/main/X/xptv.sgmodule
-#!name=XPTV规则
-#!desc=仅直连
+#!name=XPTV
+#!desc=规则仅直连
+#!author=XPTV
+#!homepage=https://raw.githubusercontent.com/fangkuia/XPTV/main/X/xptv.plugin
+#!icon=https://raw.githubusercontent.com/Game-2020/icon/refs/heads/main/XPTV.png
+#!openUrl=https://meteor-lemongrass-68b.notion.site/b60fcb3db53841229f9ec7352c5fda26?v=15f60974772080bfa59b000c96c63762
+#!tag=规则
+#!system=iOS, iPadOS, tvOS, macOS
+#!system_version=15
+#!loon_version=3.2.1(372)
+#!date=2020-08-08 18:18:18
 
 [Rule]
 #UZ影视
