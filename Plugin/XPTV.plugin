@@ -2,6 +2,7 @@
 #!name=XPTV规则
 #!desc=仅直连
 
+[Rule]
 #UZ影视
 DOMAIN-KEYWORD, bixbiy
 
