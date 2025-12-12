@@ -64,7 +64,7 @@ DOMAIN, yydsys.top, DIRECT
 #欧歌
 DOMAIN, woog.nxog.eu.org, DIRECT
 #云盘吧
-DOMAIN, yunpan8.cc, DIRECT
+DOMAIN-KEYWORD, yunpan, DIRECT
 #nmlive相关
 DOMAIN-SUFFIX, bilivideo.com, DIRECT
 DOMAIN, slink.ltd, DIRECT
