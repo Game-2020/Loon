@@ -1,7 +1,7 @@
 #!name=IP-Pure
-#!desc=节点 IP 纯净度检测（IPPure），检测当前出口 IP 是否为原生住宅 IP 及欺诈风险。默认使用当前策略组流量。
+#!desc=节点 IP 纯净度检测（IPPure），检测当前出口 IP 是否为原生住宅 IP 及欺诈风险。
 #!category=网络检测
-#!icon=network
+#!icon=globe.desktop.fill
 #!author=@wish (adapted for Loon)
 #!homepage=https://ippure.com
 
@@ -9,8 +9,8 @@
 DOMAIN-SUFFIX,ippure.com,PROXY
 
 [Script]
-# 定时刷新面板（每5分钟执行一次，相当于 update-interval=300）
-IP-Pure-Cron = type=cron, cron-expression="*/1 * * * *", script-path=https://raw.githubusercontent.com/Likhixang/Egerny/refs/heads/main/js/IPPure.js, timeout=10, tag=IP-Pure-Cron
+# 主脚本：generic 类型，用于在 Loon 首页显示面板（开启代理后可见）
+IP-Pure = type=generic, script-path=https://raw.githubusercontent.com/Likhixang/Egerny/refs/heads/main/js/IPPure.js, timeout=10, tag=IP-Pure-Display, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Network.png
 
-# 主脚本：generic 类型用于显示面板
-IP-Pure = type=generic, script-path=https://raw.githubusercontent.com/Likhixang/Egerny/refs/heads/main/js/IPPure.js, timeout=10, tag=IP-Pure, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Network.png
+# 可选：网络切换时自动刷新（切换节点/策略组/WiFi 时触发更新）
+IP-Pure-Network-Change = type=network-changed, script-path=https://raw.githubusercontent.com/Likhixang/Egerny/refs/heads/main/js/IPPure.js, timeout=10, tag=IP-Pure-Network-Change
