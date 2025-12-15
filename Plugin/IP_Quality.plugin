@@ -1,4 +1,4 @@
-#!name=IP_Quality质量体检
+#!name=IP_Quality
 #!desc=一键检测当前节点 IP 质量。包含风险评分、类型识别（原生/机房）。自动修正分流规则，解决测试结果不准的问题。
 #!author=LoonUser
 #!homepage=https://github.com/你的GitHub用户名/你的仓库名
