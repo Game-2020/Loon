@@ -11,7 +11,7 @@ if (typeof $argument !== 'undefined') {
         args[key] = val;
     });
 }
-const scriptTitle = args.title || "节点质量报告";
+const scriptTitle = args.title || "IP 质量报告";
 
 // 2. 准备请求
 const timestamp = new Date().getTime();
