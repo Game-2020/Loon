@@ -1,18 +1,21 @@
-#!name=IP 质量深度检测
-#!desc=基于 IP-API 的风险评分、原生/广播 IP 识别、住宅/机房识别。支持手动测试与自动无感检测。
-#!author=您的名字
-#!homepage=https://github.com/你的用户名/仓库名
+#!name=IP 质量体检
+#!desc=一键检测当前节点 IP 质量。包含风险评分、类型识别（原生/机房）。自动修正分流规则，解决测试结果不准的问题。
+#!author=LoonUser
+#!homepage=https://github.com/你的GitHub用户名/你的仓库名
 #!icon=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Server_3.png
 #!date=2025-12-14
 
+[Rule]
+# 强制 IP 检测接口走代理，确保测试的是节点 IP 而不是本地 IP
+# 注意：如果您的主策略组不叫 "Proxy"，请手动修改下方的 Proxy 为您的策略组名称（如 "Global" 或 "节点选择"）
+DOMAIN-SUFFIX, ip-api.com, Proxy
+
 [Script]
-# 1. 自动检测模式
-# 访问 http://ip-api.com/json 时自动触发通知
+# 1. 自动检测模式 (访问网页时触发)
 http-response ^https?://ip-api\.com/json script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP_Quality_Check.js, requires-body=true, timeout=10, tag=IP自动检测
 
 # 2. 手动点击模式 (Loon 卡片)
-# 在 Loon 首页点击卡片手动触发
-generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP_Quality_Check.js, timeout=10, tag=IP质量详情, img-url=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Server_3.png
+generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP_Quality_Check.js, timeout=10, tag=节点质量详情, img-url=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Server_3.png
 
 [MitM]
 hostname = ip-api.com
