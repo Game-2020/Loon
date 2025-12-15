@@ -14,8 +14,7 @@ DOMAIN, my.ippure.com, Proxy
 http-response ^https?://my\.ippure\.com/v1/info script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IPPure_Check.js, requires-body=true, timeout=10, tag=自动检测
 
 # 2. 手动点击模式 (Loon 首页卡片按钮)
-# tag 决定了界面上显示的文字，这里改为“点击检测”
-generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IPPure_Check.js, timeout=10, tag= iPPure质测, img-url=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Shield.png
+generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IPPure_Check.js, timeout=10, tag= iPPure, img-url=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Shield.png
 
 [MitM]
 hostname = my.ippure.com
