@@ -1,13 +1,16 @@
 #!name=IP-Pure
-#!desc=节点 IP 纯净度检测。导入后，请在插件设置中将 "TargetGroup" 修改为您常用的策略组（如 Proxy 或 Select），然后在该组中切换节点即可测试。
-#!author=Likhixang & Adapted
-#!icon=checkmark.shield.fill
-#!select=TargetGroup,DIRECT,Proxy,HongKong,TaiWan,America,Japan,Korea,Singapore,AllServer
+#!desc=节点 IP 纯净度检测（IPPure），检测当前出口 IP 是否为原生住宅 IP 及欺诈风险。默认使用当前策略组流量。
+#!category=网络检测
+#!icon=network
+#!author=@wish (adapted for Loon)
+#!homepage=https://ippure.com
 
 [Rule]
-# 核心逻辑：让检测网站走您选定的策略组变量 {TargetGroup}
-DOMAIN-SUFFIX,ippure.com,{TargetGroup}
+DOMAIN-SUFFIX,ippure.com,PROXY
 
 [Script]
-# 首页卡片脚本
-generic script-path=https://raw.githubusercontent.com/Likhixang/Egerny/refs/heads/main/js/IPPure.js, timeout=10, tag=IP 纯净度, img-symbol=checkmark.shield.fill
+# 定时刷新面板（每5分钟执行一次，相当于 update-interval=300）
+IP-Pure-Cron = type=cron, cron-expression="*/5 * * * *", script-path=https://raw.githubusercontent.com/Likhixang/Egerny/refs/heads/main/js/IPPure.js, timeout=10, tag=IP-Pure-Cron
+
+# 主脚本：generic 类型用于显示面板
+IP-Pure = type=generic, script-path=https://raw.githubusercontent.com/Likhixang/Egerny/refs/heads/main/js/IPPure.js, timeout=10, tag=IP-Pure, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Network.png
