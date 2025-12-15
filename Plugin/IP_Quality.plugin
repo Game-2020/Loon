@@ -1,26 +1,25 @@
 #!name=IP_Quality
-#!desc=一键检测节点质量。支持手动测试，以及网络切换时自动检测 IP 变动。
+#!desc=支持手动测试。并在后台每分钟检测 IP 变动（切换节点后自动提示）。
 #!author=LoonUser
 #!homepage=https://github.com/你的GitHub用户名/你的仓库名
-#!icon=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Server_3.png
-#!date=2025-12-14
+#!icon=https://www.google.com/s2/favicons?domain=ip-api.com&sz=128
+#!date=2025-12-15
 
 [Rule]
-# 强制检测接口走代理
+# 强制检测接口走代理，确保测的是节点 IP
 DOMAIN-SUFFIX, ip-api.com, Proxy
 
 [Script]
 # 1. 手动点击模式 (Loon 卡片/磁贴)
-# 不带参数，每次点击都会弹出结果，方便您手动确认
-generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP_Quality_Check.js, timeout=10, tag=IP_Quality, img-url=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Server_3.png
+# 强制显示结果
+generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP_Quality_Check.js, timeout=10, tag=IP_Quality, img-url=https://www.google.com/s2/favicons?domain=ip-api.com&sz=128
 
-# 2. 网络变动自动检测 (Wi-Fi/数据切换时触发)
-# 带上 mode=monitor 参数，脚本会比对旧 IP，只有 IP 真的变了才会弹窗，防止重复打扰
+# 2. 定时自动监控 (每分钟检查一次)
+# argument=mode=monitor 表示开启“静默监控模式”，只有 IP 变了才弹窗
+cron "0 * * * * *" script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP_Quality_Check.js, timeout=10, tag=IP变动监控, argument=mode=monitor
+
+# 3. 网络变动自动检测 (Wi-Fi/数据切换时触发)
 network-changed script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP_Quality_Check.js, timeout=10, argument=mode=monitor
-
-# (可选) 3. 如果您需要极其灵敏的节点切换检测（甚至在同一Wi-Fi下切换节点）
-# 可以启用下方的 cron 定时任务，每分钟自动检查一次 IP 是否变动
-# cron "0 * * * * *" script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP_Quality_Check.js, timeout=10, argument=mode=monitor
 
 [MitM]
 hostname = ip-api.com
