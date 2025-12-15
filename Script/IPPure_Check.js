@@ -1,5 +1,5 @@
 /*
- * Loon 脚本：节点质量检测 (中文版)
+ * Loon 脚本：节点质量检测 (全汉化版)
  */
 
 // 添加随机时间戳防止缓存
@@ -12,8 +12,7 @@ const headers = {
 
 $httpClient.get({ url: url, headers: headers }, (err, resp, data) => {
   if (err) {
-    // 失败时的标题
-    $done({ title: "节点质量报告", content: "检测失败，请检查网络连接", icon: "network.slash", "background-color": "#FF0000" })
+    $done({ title: "节点质量报告", content: "检测失败，请检查网络", icon: "network.slash", "background-color": "#FF0000" })
     return
   }
 
@@ -32,7 +31,7 @@ $httpClient.get({ url: url, headers: headers }, (err, resp, data) => {
   
   // 风险系数逻辑
   const risk = j.fraudScore;
-  let riskText = `风险系数：${risk}`;
+  let riskText = `风险等级：${risk}`;
   let titleColor = "#007AFF"; // 默认蓝
   let icon = "checkmark.seal.fill";
 
@@ -52,14 +51,17 @@ $httpClient.get({ url: url, headers: headers }, (err, resp, data) => {
     titleColor = "#34C759"; // 绿
   }
 
-  // 成功时的标题
+  // --- 汉化修改点 ---
+  // 1. IP -> IP地址
+  // 2. ASN -> 运营商
+  // 3. 位置 -> 所在地 (数据本身 ippure 返回的是英文，标签改为中文)
   $done({
     title: `节点质量报告`,
     content:
-`IP：${j.ip}
-ASN：AS${j.asn} ${j.asOrganization}
-位置：${flag} ${j.country} ${j.city}
-类型：${nativeText}
+`IP地址：${j.ip}
+运营商：AS${j.asn} ${j.asOrganization}
+所在地：${flag} ${j.country} ${j.city}
+IP类型：${nativeText}
 ${riskText}`,
     icon: icon,
     'background-color': titleColor
