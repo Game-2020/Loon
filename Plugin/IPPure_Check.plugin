@@ -12,7 +12,7 @@ DOMAIN, my.ippure.com, Proxy
 [Script]
 # 1. 手动点击模式 (Loon 首页卡片按钮)
 # 强制显示结果
-generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IPPure_Check.js, timeout=10, tag=iPPure手动点击模式, img-url=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Shield.png
+generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IPPure_Check.js, timeout=10, tag=IPPure手动点击模式, img-url=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Shield.png
 
 # 2. 定时自动监控 (每分钟检查一次)
 # argument=mode=monitor 表示开启“静默监控模式”，只有 IP 变了才弹窗
