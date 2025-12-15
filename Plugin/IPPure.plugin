@@ -1,15 +1,13 @@
-[Plugin]
-name = IP-Pure
-desc = 节点 IP 纯净度检测（IPPure）
-desc = ⚠️ 使用前请点击配置按钮（齿轮图标），在“选择策略组”中选择您想检测的节点或策略组（默认为 DIRECT）。
-author = Likhixang
-# 允许用户选择策略组，对应下方 [Rule] 中的变量
-argument = Proxy=select, "DIRECT", "PROXY", "Auto", desc=选择策略组
+#!name=IP-Pure
+#!desc=节点 IP 纯净度检测。导入后，请在插件设置中将 "TargetGroup" 修改为您常用的策略组（如 Proxy 或 Select），然后在该组中切换节点即可测试。
+#!author=Likhixang & Adapted
+#!icon=checkmark.shield.fill
+#!select=TargetGroup,Proxy,Select,Global,DIRECT
 
 [Rule]
-# 确保检测请求走选定的策略组
-DOMAIN-SUFFIX,ippure.com,{Proxy}
+# 核心逻辑：让检测网站走您选定的策略组变量 {TargetGroup}
+DOMAIN-SUFFIX,ippure.com,{TargetGroup}
 
 [Script]
-# 面板脚本 (Tile)
-generic script-path=https://raw.githubusercontent.com/Likhixang/Egerny/main/js/IPPure.js, timeout=10, tag=IP 纯净度, img-symbol=shield.checkerboard
+# 首页卡片脚本
+generic script-path=https://raw.githubusercontent.com/Likhixang/Egerny/refs/heads/main/js/IPPure.js, timeout=10, tag=IP 纯净度, img-symbol=checkmark.shield.fill
