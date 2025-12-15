@@ -1,21 +1,21 @@
-#!name=IPPure 纯净度检测
-#!desc=使用 ippure.com 检测节点风险值、原生属性。支持手动点击测试当前选中节点。
+#!name=节点质量检测
+#!desc=基于 IPPure 的节点深度检测。显示风险系数、原生/机房属性。
 #!author=User & Gemini
 #!homepage=https://github.com/你的GitHub用户名/你的仓库名
-#!icon=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Server_3.png
+#!icon=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Shield.png
 #!date=2025-12-14
 
 [Rule]
-# 强制 ippure 检测接口走代理组，实现“测哪个节点就显示哪个数据”
-# 如果您的主策略组不叫 Proxy，请修改为 Select 或 节点选择
+# 强制检测接口走代理，确保测的是节点 IP
 DOMAIN, my.ippure.com, Proxy
 
 [Script]
-# 1. 自动检测 (可选，访问 ippure 网页时触发)
-http-response ^https?://my\.ippure\.com/v1/info script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IPPure_Check.js, requires-body=true, timeout=10, tag=IPPure自动检测
+# 1. 自动检测 (访问网页触发)
+http-response ^https?://my\.ippure\.com/v1/info script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IPPure_Check.js, requires-body=true, timeout=10, tag=自动检测
 
-# 2. 手动点击模式 (Loon 卡片主入口)
-generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IPPure_Check.js, timeout=10, tag=节点纯净度, img-url=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Shield.png
+# 2. 手动点击模式 (Loon 首页卡片按钮)
+# tag 决定了界面上显示的文字，这里改为“点击检测”
+generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IPPure_Check.js, timeout=10, tag=点击检测, img-url=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Shield.png
 
 [MitM]
 hostname = my.ippure.com
