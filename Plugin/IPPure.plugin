@@ -1,20 +1,25 @@
-#!name= iPPure
-#!desc=基于 IPPure 的节点深度检测。显示风险系数、原生/机房属性。
+#!name=iPPure
+#!desc=基于 IPPure 的节点深度检测。支持手动测试，并在后台每分钟检测 IP 变动（切换节点后自动提示）。
 #!author=User & Gemini
 #!homepage=https://github.com/你的GitHub用户名/你的仓库名
-#!icon=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Shield.png
-#!date=2025-12-14
+#!icon=https://ippure.com/apple-touch-icon.png
+#!date=2025-12-15
 
 [Rule]
 # 强制检测接口走代理，确保测的是节点 IP
 DOMAIN, my.ippure.com, Proxy
 
 [Script]
-# 1. 自动检测 (访问网页触发)
-http-response ^https?://my\.ippure\.com/v1/info script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IPPure_Check.js, requires-body=true, timeout=10, tag=自动检测
+# 1. 手动点击模式 (Loon 首页卡片按钮)
+# 强制显示结果
+generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IPPure_Check.js, timeout=10, tag=iPPure手动点击模式, img-url=https://ippure.com/apple-touch-icon.png
 
-# 2. 手动点击模式 (Loon 首页卡片按钮)
-generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IPPure_Check.js, timeout=10, tag= iPPure, img-url=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Shield.png
+# 2. 定时自动监控 (每分钟检查一次)
+# argument=mode=monitor 表示开启“静默监控模式”，只有 IP 变了才弹窗
+cron "0 * * * * *" script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IPPure_Check.js, timeout=10, tag=iPPure定时自动监控, argument=mode=monitor
+
+# 3. 网络变动自动检测 (Wi-Fi/数据切换时触发)
+network-changed script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IPPure_Check.js, timeout=10, tag=iPPure网络变动自动检测, argument=mode=monitor
 
 [MitM]
 hostname = my.ippure.com
