@@ -2,7 +2,7 @@
 #!desc=节点 IP 纯净度检测。导入后，请在插件设置中将 "TargetGroup" 修改为您常用的策略组（如 Proxy 或 Select），然后在该组中切换节点即可测试。
 #!author=Likhixang & Adapted
 #!icon=checkmark.shield.fill
-#!select=TargetGroup,Proxy,Select,Global,DIRECT
+#!select=TargetGroup,DIRECT,Proxy,HongKong,TaiWan,America,Japan,Korea,Singapore,AllServer
 
 [Rule]
 # 核心逻辑：让检测网站走您选定的策略组变量 {TargetGroup}
