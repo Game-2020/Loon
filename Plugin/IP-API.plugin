@@ -1,4 +1,4 @@
-#!name=IP−API
+#!name=IP−API_Check
 #!desc=支持手动测试。并在后台每分钟检测 IP 变动（切换节点后自动提示）。
 #!author=LoonUser
 #!homepage=https://github.com/你的GitHub用户名/你的仓库名
