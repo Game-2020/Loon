@@ -10,7 +10,7 @@ DOMAIN-SUFFIX,ippure.com,PROXY
 
 [Script]
 # 定时刷新面板（每5分钟执行一次，相当于 update-interval=300）
-IP-Pure-Cron = type=cron, cron-expression="*/5 * * * *", script-path=https://raw.githubusercontent.com/Likhixang/Egerny/refs/heads/main/js/IPPure.js, timeout=10, tag=IP-Pure-Cron
+IP-Pure-Cron = type=cron, cron-expression="*/1 * * * *", script-path=https://raw.githubusercontent.com/Likhixang/Egerny/refs/heads/main/js/IPPure.js, timeout=10, tag=IP-Pure-Cron
 
 # 主脚本：generic 类型用于显示面板
 IP-Pure = type=generic, script-path=https://raw.githubusercontent.com/Likhixang/Egerny/refs/heads/main/js/IPPure.js, timeout=10, tag=IP-Pure, img-url=https://raw.githubusercontent.com/Koolson/Qure/master/IconSet/Network.png
