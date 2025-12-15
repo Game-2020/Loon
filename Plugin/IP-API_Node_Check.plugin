@@ -6,4 +6,4 @@
 #!date=2025-12-15
 
 [Script]
-generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP−API_Node_Check.js, timeout=10, tag=IP−API_Node_Check, img-url=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Shield.png, argument=title=IP 质量报告
+generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP-API_Node_Check.js, timeout=10, tag=IP−API_Node_Check, img-url=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Shield.png, argument=title=IP 质量报告
