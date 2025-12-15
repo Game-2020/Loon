@@ -1,6 +1,6 @@
 /*
- * Loon 脚本：IP 质量检测 (智能监控版)
- * 功能：手动测试强制弹窗；自动监控只有 IP 变动才弹窗
+ * Loon 脚本：IPPure 深度检测 (去重版)
+ * 功能：修复了通知栏中风险等级重复显示的问题
  */
 
 // 1. 获取输入参数
@@ -11,94 +11,125 @@ if (typeof $argument !== 'undefined') {
         args[key] = val;
     });
 }
-// 判断是否为监控模式 (cron 或 network-changed 触发时会有这个参数)
+// 判断是否为监控模式
 const isMonitor = args.mode === "monitor";
 
 const timestamp = new Date().getTime();
-const url = `http://ip-api.com/json/?lang=zh-CN&fields=status,message,country,countryCode,region,regionName,city,zip,lat,lon,timezone,isp,org,as,asname,mobile,proxy,hosting,query&t=${timestamp}`;
+const url = `https://my.ippure.com/v1/info?t=${timestamp}`;
 
-$httpClient.get({ url: url }, (error, response, data) => {
-    // 错误处理：监控模式下保持静默，避免刷屏
-    if (error) {
-        if (!isMonitor) $notification.post("检测失败", "网络错误", "无法连接服务器");
+const headers = {
+    "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1"
+};
+
+// 常用国家代码汉化映射表
+const countryMap = {
+    "CN": "中国", "HK": "香港", "MO": "澳门", "TW": "台湾",
+    "US": "美国", "JP": "日本", "KR": "韩国", "SG": "新加坡",
+    "GB": "英国", "FR": "法国", "DE": "德国", "NL": "荷兰",
+    "RU": "俄罗斯", "IN": "印度", "CA": "加拿大", "AU": "澳大利亚",
+    "MY": "马来西亚", "TH": "泰国", "VN": "越南", "PH": "菲律宾",
+    "ID": "印尼", "TR": "土耳其", "IT": "意大利", "ES": "西班牙",
+    "BR": "巴西", "AR": "阿根廷", "MX": "墨西哥", "ZA": "南非",
+    "CH": "瑞士", "SE": "瑞典", "AE": "阿联酋", "IL": "以色列"
+};
+
+$httpClient.get({ url: url, headers: headers }, (err, resp, data) => {
+    // 错误处理
+    if (err) {
+        if (!isMonitor) $notification.post("IPPure检测失败", "网络错误", "无法连接服务器");
         $done();
         return;
     }
 
-    let ipInfo;
+    let j;
     try {
-        ipInfo = JSON.parse(data);
+        j = JSON.parse(data);
     } catch (e) {
-        if (!isMonitor) $notification.post("检测失败", "数据解析错误", "");
+        if (!isMonitor) {
+             let msg = "数据解析错误";
+             if(data && (data.includes("Cloudflare") || data.includes("html"))) msg = "触发 WAF 防火墙拦截";
+             $notification.post("IPPure检测失败", msg, "请尝试切换节点");
+        }
         $done();
         return;
     }
 
     // --- 核心逻辑：智能静默检测 ---
-    const currentIP = ipInfo.query;
-    // 读取上一次记录的 IP
-    const lastIP = $persistentStore.read("Loon_IP_Check_Last_IP");
+    const currentIP = j.ip;
+    const lastIP = $persistentStore.read("Loon_IPPure_Last_IP");
 
     if (isMonitor) {
-        // 如果是监控模式，且 IP 没变，直接退出，不打扰用户
         if (lastIP === currentIP) {
             $done();
             return;
         }
-        // 如果 IP 变了，继续执行，并更新记录
-        console.log(`[IP监控] 检测到变动: ${lastIP} -> ${currentIP}`);
+        console.log(`[IPPure监控] 检测到变动: ${lastIP} -> ${currentIP}`);
     }
     
-    // 保存当前 IP 为“上一次 IP”
-    $persistentStore.write(currentIP, "Loon_IP_Check_Last_IP");
+    $persistentStore.write(currentIP, "Loon_IPPure_Last_IP");
 
-    // --- 以下为正常的显示逻辑 ---
+    // --- 显示逻辑 ---
+    const flag = flagEmoji(j.countryCode);
+    
+    let cnCountry = countryMap[j.countryCode] || "";
+    if(cnCountry) cnCountry = cnCountry + " ";
 
-    // 1. 类型识别
-    let type = "家庭宽带";
-    let typeIcon = "🏠";
-    if (ipInfo.hosting) {
-        type = "数据中心/机房";
-        typeIcon = "🏢";
-    } else if (ipInfo.mobile) {
-        type = "移动网络";
-        typeIcon = "📶";
+    const nativeText = j.isResidential ? "✅ 是 (原生)" : "🏢 否 (机房)";
+    const risk = j.fraudScore;
+    
+    // 风险文案
+    let riskText = `风险等级：${risk}`;
+    let titleColor = "#007AFF"; 
+    let icon = "checkmark.seal.fill";
+
+    if (risk >= 80) {
+        riskText = `🛑 极高风险 (${risk})`;
+        titleColor = "#FF3B30"; 
+        icon = "exclamationmark.triangle.fill";
+    } else if (risk >= 70) {
+        riskText = `⚠️ 高风险 (${risk})`;
+        titleColor = "#FF9500"; 
+        icon = "exclamationmark.triangle.fill";
+    } else if (risk >= 40) {
+        riskText = `🔶 中等风险 (${risk})`;
+        titleColor = "#FFCC00"; 
+    } else {
+        riskText = `✅ 低风险 (${risk})`;
+        titleColor = "#34C759"; 
     }
 
-    // 2. 风险评分
-    let riskScore = 0;
-    if (ipInfo.proxy) riskScore += 40;
-    if (ipInfo.hosting) riskScore += 30;
-    if (ipInfo.mobile) riskScore -= 10;
-    if (riskScore < 0) riskScore = 0;
-    if (riskScore > 100) riskScore = 100;
-
-    let riskLevel = "低风险";
-    let riskColor = "#00FF00"; 
-    if (riskScore > 30) { riskLevel = "中等风险"; riskColor = "#FFA500"; }
-    if (riskScore > 60) { riskLevel = "高风险"; riskColor = "#FF0000"; }
-
-    // 3. 构建标题 (如果是自动监测到的，加个🔔提醒)
+    // 标题前缀
     let titlePrefix = "";
     if (isMonitor) {
         titlePrefix = "🔔 IP已变动: ";
     }
-    
-    const title = `${titlePrefix}${ipInfo.country} - ${ipInfo.query}`;
-    const subtitle = `${typeIcon} ${type}  |  ${riskScore}分`;
-    
-    const content = `位置: ${ipInfo.regionName} ${ipInfo.city}\n` +
-                    `运营商: ${ipInfo.isp}\n` +
-                    `类型: ${ipInfo.hosting ? "广播/机房" : "原生"} (${riskLevel})\n` +
-                    `检测时间: ${new Date().toLocaleTimeString()}`;
 
-    // 发送通知
-    $notification.post(title, subtitle, content);
+    const title = `${titlePrefix}IPPure 质量报告`;
+    
+    // 【修改点】在这里去掉了 ${riskText}，因为它已经作为副标题传递给 $notification.post 的第二个参数了
+    const content = 
+`IP地址：${j.ip}
+运营商：AS${j.asn} ${j.asOrganization}
+所在地：${flag} ${cnCountry}${j.country} ${j.city}
+IP类型：${nativeText}`;
+
+    // 发送通知：(标题, 副标题/风险提示, 内容)
+    $notification.post(title, riskText, content);
     
     $done({
         title: title,
         content: content,
-        icon: typeIcon,
-        "background-color": riskColor
+        icon: icon,
+        'background-color': titleColor
     });
 });
+
+function flagEmoji(code) {
+    if (!code) return "🌍";
+    if (code.toUpperCase() === "TW") {
+        code = "CN";
+    }
+    return String.fromCodePoint(
+        ...code.toUpperCase().split('').map(c => 127397 + c.charCodeAt())
+    )
+}
