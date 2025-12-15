@@ -16,10 +16,10 @@ generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/
 
 # 2. 定时自动监控 (每分钟检查一次)
 # argument=mode=monitor 表示开启“静默监控模式”，只有 IP 变了才弹窗
-cron "0 * * * * *" script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IPPure_Check.js, timeout=10, tag=iPPure定时自动监控, argument=mode=monitor
+cron "0 * * * * *" script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IPPure_Check.js, img-url=https://icons.duckduckgo.com/ip3/ippure.com.ico, timeout=10, tag=iPPure定时自动监控, argument=mode=monitor
 
 # 3. 网络变动自动检测 (Wi-Fi/数据切换时触发)
-network-changed script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IPPure_Check.js, timeout=10, tag=iPPure网络变动自动检测, argument=mode=monitor
+network-changed script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IPPure_Check.js, img-url=https://icons.duckduckgo.com/ip3/ippure.com.ico, timeout=10, tag=iPPure网络变动自动检测, argument=mode=monitor
 
 [MitM]
 hostname = my.ippure.com
