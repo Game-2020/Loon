@@ -1,10 +1,9 @@
-#!name=IP 质量检测(独立版)
+#!name=IP_Quality_Node_Check
 #!desc=基于 IP-API。无需配置分流规则，点击节点列表中的任意节点，即可测试该节点的 IP 详情与风险参考。
 #!author=User & Gemini
 #!homepage=https://github.com/你的GitHub用户名/你的仓库名
-#!icon=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Server_3.png
-#!date=2025-12-14
+#!icon=https://www.google.com/s2/favicons?domain=ip-api.com&sz=128
+#!date=2025-12-15
 
 [Script]
-# 通用脚本模式，支持点击节点运行
-generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP_Quality_Node_Check.js, timeout=10, tag=IP质量检测, img-url=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Server_3.png, argument=title=IP 质量报告
+generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP_Quality_Node_Check.js, timeout=10, tag=IP_Quality_Node_Check, img-url=https://www.google.com/s2/favicons?domain=ip-api.com&sz=128, argument=title=IP 质量报告
