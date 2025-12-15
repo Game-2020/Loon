@@ -12,14 +12,14 @@ DOMAIN-SUFFIX, ip-api.com, Proxy
 [Script]
 # 1. 手动点击模式 (Loon 卡片/磁贴)
 # 强制显示结果
-generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP_Quality_Check.js, timeout=10, tag=手动点击模式, img-url=https://www.google.com/s2/favicons?domain=ip-api.com&sz=128
+generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP_Quality_Check.js, timeout=10, tag=IP_Quality手动点击模式, img-url=https://www.google.com/s2/favicons?domain=ip-api.com&sz=128
 
 # 2. 定时自动监控 (每分钟检查一次)
 # argument=mode=monitor 表示开启“静默监控模式”，只有 IP 变了才弹窗
-cron "0 * * * * *" script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP_Quality_Check.js, timeout=10, tag=定时自动监控, img-url=https://www.google.com/s2/favicons?domain=ip-api.com&sz=128, argument=mode=monitor
+cron "0 * * * * *" script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP_Quality_Check.js, timeout=10, tag=IP_Quality定时自动监控, img-url=https://www.google.com/s2/favicons?domain=ip-api.com&sz=128, argument=mode=monitor
 
 # 3. 网络变动自动检测 (Wi-Fi/数据切换时触发)
-network-changed script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP_Quality_Check.js, timeout=10, tag=网络变动自动检测, img-url=https://www.google.com/s2/favicons?domain=ip-api.com&sz=128, argument=mode=monitor
+network-changed script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP_Quality_Check.js, timeout=10, tag=IP_Quality网络变动自动检测, img-url=https://www.google.com/s2/favicons?domain=ip-api.com&sz=128, argument=mode=monitor
 
 [MitM]
 hostname = ip-api.com
