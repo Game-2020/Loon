@@ -1,0 +1,11 @@
+#!name=节点 IP 纯净度检测
+#!desc=在仪表盘显示当前节点 IP 的纯净度、风险值、ASN 及原生属性。
+#!openUrl=https://my.ippure.com
+#!author=Gemini
+#!homepage=https://github.com/Loon0x00/Loon-Manual
+#!icon=checkmark.shield.fill
+#!select=开启
+
+[Script]
+# 节点 IP 纯净度检测卡片
+enable=true, type=generic, timeout=10, tag=IP纯净度, img-symbol=checkmark.shield.fill, script-path=ippure_loon.js
