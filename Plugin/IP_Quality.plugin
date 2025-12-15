@@ -1,0 +1,18 @@
+#!name=IP 质量深度检测
+#!desc=基于 IP-API 的风险评分、原生/广播 IP 识别、住宅/机房识别。支持手动测试与自动无感检测。
+#!author=您的名字
+#!homepage=https://github.com/你的用户名/仓库名
+#!icon=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Server_3.png
+#!date=2025-12-14
+
+[Script]
+# 1. 自动检测模式
+# 访问 http://ip-api.com/json 时自动触发通知
+http-response ^https?://ip-api\.com/json script-path=https://raw.githubusercontent.com/你的用户名/仓库名/main/IP_Quality_Check.js, requires-body=true, timeout=10, tag=IP自动检测
+
+# 2. 手动点击模式 (Loon 卡片)
+# 在 Loon 首页点击卡片手动触发
+generic script-path=https://raw.githubusercontent.com/你的用户名/仓库名/main/IP_Quality_Check.js, timeout=10, tag=IP质量详情, img-url=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Server_3.png
+
+[MitM]
+hostname = ip-api.com
