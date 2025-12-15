@@ -84,7 +84,7 @@ $httpClient.get({ url: url }, (error, response, data) => {
         titlePrefix = "🔔 IP已变动: ";
     }
     
-    const title = `${titlePrefix}${ipInfo.country} - ${ipInfo.query}`;
+    const title = `${titlePrefix}IPIP-API 质量报告`;
     const subtitle = `${typeIcon} ${type}  |  ${riskScore}分`;
     
     const content = `位置: ${ipInfo.regionName} ${ipInfo.city}\n` +
