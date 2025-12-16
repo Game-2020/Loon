@@ -23,11 +23,13 @@ generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/
 # 定时任务 (每分钟)
 cron "0 * * * * *" script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IPPure_Universal.js, img-url=https://ippure.com/apple-touch-icon.png, timeout=10, tag=IPPure定时监控, argument=mode=monitor
 
-# 网络变动触发
+# ----------------------------------------
+# 场景 3：网络变动触发
+# ----------------------------------------
 network-changed script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IPPure_Universal.js, img-url=https://ippure.com/apple-touch-icon.png, timeout=10, tag=IPPure变动监控, argument=mode=monitor
 
 # ----------------------------------------
-# 场景 3：节点列表点击 (独立节点测试)
+# 场景 4：节点列表点击 (独立节点测试)
 # ----------------------------------------
 # 脚本会自动识别节点点击事件，劫持流量，不影响监控记录
 generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IPPure_Universal.js, timeout=10, tag=IPPure节点测试, img-url=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Shield.png, argument=title=IP 质量报告
