@@ -1,10 +1,9 @@
 /*
- * Loon 脚本：IPPure 全能复刻版
+ * Loon 脚本：IPPure 全能复刻版 (清爽通知版)
  * 功能：
- * 1. 深度复刻 IPPure 网页版 UI 风格 (来源/属性/系数)
- * 2. 节点列表点击：测试独立节点 (强制弹窗)
- * 3. 首页卡片：手动刷新 (强制弹窗)
- * 4. 后台监控：仅 IP 变动时弹窗
+ * 1. 深度复刻 IPPure 网页版 UI 风格
+ * 2. 修复通知栏重复显示的问题 (去除副标题)
+ * 3. 节点列表点击 / 首页卡片 / 后台监控 全兼容
  */
 
 // --- 1. 环境与参数识别 ---
@@ -60,7 +59,7 @@ $httpClient.get(requestOptions, (err, resp, data) => {
     if (err) {
         if (isMonitor) { $done(); } 
         else {
-            $notification.post("IPPure检测失败", "网络错误", "无法连接服务器");
+            $notification.post("IPPure检测失败", "", "网络错误，无法连接服务器");
             $done({ title: "检测失败", content: "网络错误", icon: "network.slash", "background-color": "#FF0000" });
         }
         return;
@@ -70,7 +69,7 @@ $httpClient.get(requestOptions, (err, resp, data) => {
         let msg = `服务器状态码: ${resp.status}`;
         if (resp.status === 403) msg = "🛑 访问被拒 (WAF拦截)";
         if (!isMonitor) {
-            $notification.post("IPPure检测失败", msg, "请切换节点重试");
+            $notification.post("IPPure检测失败", "", msg);
             $done({ title: "检测失败", content: msg, icon: "exclamationmark.triangle", "background-color": "#FF9500" });
         } else { $done(); }
         return;
@@ -83,7 +82,7 @@ $httpClient.get(requestOptions, (err, resp, data) => {
         if (!isMonitor) {
             let reason = "数据解析错误";
             if (data.includes("Cloudflare") || data.includes("html")) reason = "🚫 触发官网 WAF 拦截";
-            $notification.post("IPPure检测失败", reason, "该节点被识别为爬虫");
+            $notification.post("IPPure检测失败", "", reason);
             $done({ title: "检测失败", content: reason, icon: "hand.raised.fill", "background-color": "#FF3B30" });
         } else { $done(); }
         return;
@@ -100,54 +99,45 @@ $httpClient.get(requestOptions, (err, resp, data) => {
         $persistentStore.write(currentIP, "Loon_IPPure_Last_IP");
     }
 
-    // --- 6. 数据可视化构建 (复刻网页版) ---
+    // --- 6. 数据可视化构建 ---
     
-    // 位置处理
+    // 位置
     const flag = flagEmoji(j.countryCode);
     let cnCountry = countryMap[j.countryCode] || "";
     if(cnCountry) cnCountry = cnCountry + " ";
     
-    // 风险处理 (模拟网页版百分比)
+    // 风险
     const risk = j.fraudScore;
     let riskLevel = "低风险";
-    let titleColor = "#34C759"; // 绿
+    let titleColor = "#34C759"; 
     let icon = "checkmark.seal.fill";
-    let riskBar = "🟩🟩🟩🟩🟩"; // 简单的进度条模拟
+    let riskBar = "🟩🟩🟩🟩🟩";
 
     if (risk >= 80) {
         riskLevel = "极高风险";
-        titleColor = "#FF3B30"; // 红
+        titleColor = "#FF3B30"; 
         icon = "exclamationmark.triangle.fill";
         riskBar = "🟥🟥🟥🟥🟥";
     } else if (risk >= 70) {
         riskLevel = "高风险";
-        titleColor = "#FF9500"; // 橙
+        titleColor = "#FF9500"; 
         icon = "exclamationmark.triangle.fill";
         riskBar = "🟧🟧🟧🟧⬜️";
     } else if (risk >= 40) {
         riskLevel = "中等风险";
-        titleColor = "#FFCC00"; // 黄
+        titleColor = "#FFCC00"; 
         riskBar = "🟨🟨🟨⬜️⬜️";
     }
 
-    // 来源与属性 (模拟网页版标签)
-    // API 只有 isResidential，我们通过它来生成两个标签
-    let sourceLabel = "";
-    let propertyLabel = "";
-    
-    if (j.isResidential) {
-        sourceLabel = "原生 IP";
-        propertyLabel = "住宅网络";
-    } else {
-        sourceLabel = "非原生/广播";
-        propertyLabel = "数据中心(机房)";
-    }
+    // 标签
+    let sourceLabel = j.isResidential ? "原生 IP" : "非原生/广播";
+    let propertyLabel = j.isResidential ? "住宅网络" : "数据中心(机房)";
 
     // 标题
     let title = "IPPure 质量报告";
     if (isMonitor) title = "IPPure🔔 IP已变动";
 
-    // 内容排版 (尽量对齐截图风格)
+    // 内容排版
     const content = 
 `${nodeNameDisplay}IP：${j.ip}
 ASN：${j.asOrganization} (AS${j.asn})
@@ -158,9 +148,8 @@ IPPure系数：${risk}% ${riskLevel}
 ${riskBar}`;
 
     // 发送通知 (强制弹窗)
-    // 副标题显示最关键的风险信息
-    const subtitle = `${flag} ${risk}% ${riskLevel} | ${sourceLabel}`;
-    $notification.post(title, subtitle, content);
+    // 【修改点】副标题 (第二个参数) 设为空字符串 ""，避免与正文内容重复
+    $notification.post(title, "", content);
     
     $done({
         title: title,
