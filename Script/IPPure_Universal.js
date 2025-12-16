@@ -1,9 +1,9 @@
 /*
- * Loon 脚本：IPPure 全能合并版
+ * Loon 脚本：IPPure 全能合并版 (弹窗修复版)
  * 功能：
- * 1. 节点列表点击：测试独立节点质量 (自动劫持流量)
- * 2. 首页卡片/磁贴：测试当前选中节点 (支持手动刷新)
- * 3. 后台监控：Cron/网络变动触发，仅在 IP 变动时弹窗
+ * 1. 节点列表点击：测试独立节点质量 (强制弹窗)
+ * 2. 首页卡片：测试当前选中节点 (强制弹窗)
+ * 3. 后台监控：Cron/网络变动触发 (仅 IP 变动时弹窗)
  */
 
 // --- 1. 环境与参数识别 ---
@@ -16,9 +16,9 @@ if (typeof $argument !== 'undefined') {
 }
 
 // 判定当前运行模式
-// 模式 A: 节点列表点击 (Loon 会传入 $environment.params.node)
+// 模式 A: 节点列表点击
 const isNodeClick = (typeof $environment !== 'undefined' && $environment.params && $environment.params.node);
-// 模式 B: 静默监控 (传入了 mode=monitor 参数)
+// 模式 B: 静默监控
 const isMonitor = args.mode === "monitor";
 
 // --- 2. 准备请求 ---
@@ -33,7 +33,7 @@ const headers = {
 let requestOptions = {
     url: url,
     headers: headers,
-    timeout: 8000 // 适当延长超时时间
+    timeout: 8000
 };
 
 // 核心逻辑：如果是节点点击模式，强制指定出口节点
@@ -41,7 +41,7 @@ let nodeNameDisplay = "";
 if (isNodeClick) {
     requestOptions.node = $environment.params.node;
     nodeNameDisplay = `节点：${$environment.params.node}\n`;
-    console.log(`[IPPure] 正在测试独立节点: ${requestOptions.node}`);
+    console.log(`[IPPure] 测试独立节点: ${requestOptions.node}`);
 }
 
 // --- 3. 辅助数据 (汉化表) ---
@@ -60,13 +60,12 @@ const countryMap = {
 $httpClient.get(requestOptions, (err, resp, data) => {
     // A. 错误处理
     if (err) {
-        // 如果是监控模式且网络不通，静默退出不打扰
         if (isMonitor) {
             $done();
         } else {
             let errorMsg = "请求失败";
             if (err.error === "DNS error") errorMsg = "DNS 解析失败";
-            if (err.error === "Timeout") errorMsg = "请求超时 (节点不通)";
+            if (err.error === "Timeout") errorMsg = "请求超时";
             $notification.post("IPPure检测失败", errorMsg, "请检查网络或更换节点");
             $done({ title: "检测失败", content: errorMsg, icon: "network.slash", "background-color": "#FF0000" });
         }
@@ -75,10 +74,12 @@ $httpClient.get(requestOptions, (err, resp, data) => {
 
     // B. WAF/防火墙拦截检查
     if (resp.status !== 200) {
+        let msg = `服务器返回状态码: ${resp.status}`;
+        if (resp.status === 403) msg = "🛑 访问被拒绝 (403)";
+        if (resp.status === 503) msg = "🚧 服务不可用 (503)";
+        
+        // 只有非监控模式才弹窗报错
         if (!isMonitor) {
-            let msg = `服务器返回状态码: ${resp.status}`;
-            if (resp.status === 403) msg = "🛑 访问被拒绝 (403)";
-            if (resp.status === 503) msg = "🚧 服务不可用 (503)";
             $notification.post("IPPure检测失败", msg, "可能被防火墙拦截");
             $done({ title: "检测失败", content: msg, icon: "exclamationmark.triangle", "background-color": "#FF9500" });
         } else {
@@ -104,21 +105,20 @@ $httpClient.get(requestOptions, (err, resp, data) => {
         return;
     }
 
-    // --- 5. 监控模式逻辑 (仅在非节点点击模式下生效) ---
-    // 如果是专门测某个节点，不应该更新全局的 IP 变动记录
+    // --- 5. 监控模式逻辑 ---
+    // 只有在“非节点列表点击”时才记录 IP，防止测某个特定节点时打乱全局监控记录
     if (!isNodeClick) {
         const currentIP = j.ip;
         const lastIP = $persistentStore.read("Loon_IPPure_Last_IP");
 
         if (isMonitor) {
-            // 监控模式：IP 没变就静默退出
+            // 监控模式下：如果 IP 没变，直接结束，不弹窗
             if (lastIP === currentIP) {
                 $done();
                 return;
             }
             console.log(`[IPPure监控] IP变动: ${lastIP} -> ${currentIP}`);
         }
-        // 更新记录
         $persistentStore.write(currentIP, "Loon_IPPure_Last_IP");
     }
 
@@ -163,15 +163,14 @@ $httpClient.get(requestOptions, (err, resp, data) => {
 所在地：${flag} ${cnCountry}${j.country} ${j.city}
 IP类型：${nativeText}`;
 
-    // 发送通知 (仅监控模式或主页手动点击时发送，列表点击不发通知以免遮挡)
-    if (!isNodeClick) {
-        $notification.post(title, riskText, content);
-    }
+    // --- 关键修改：恢复强制弹窗 ---
+    // 只要代码运行到这里（说明不是监控模式的静默退出），就发送弹窗
+    $notification.post(title, riskText, content);
     
-    // 返回给 Loon 界面
+    // 返回给 Loon 界面 (Loon 弹窗UI)
     $done({
         title: title,
-        content: content + `\n${riskText}`, // 列表显示时，把风险加回正文底部方便查看
+        content: content + `\n${riskText}`,
         icon: icon,
         'background-color': titleColor
     });
