@@ -1,9 +1,9 @@
 /*
- * Loon 脚本：IPPure 全能复刻版 (自定义通知版)
+ * Loon 脚本：IPPure 全能复刻版 (分数显示优化版)
  * 功能：
- * 1. 深度复刻 IPPure 网页版 UI
- * 2. 通知栏副标题：显示 [国旗 国家 | 风险分]
- * 3. 兼容所有模式 (节点点击/卡片/监控)
+ * 1. 通知副标题：[国旗 国家 ｜ XX分]
+ * 2. 深度复刻 IPPure 网页版 UI
+ * 3. 兼容所有模式
  */
 
 // --- 1. 环境与参数识别 ---
@@ -103,9 +103,9 @@ $httpClient.get(requestOptions, (err, resp, data) => {
     
     // 位置与国旗
     const flag = flagEmoji(j.countryCode);
-    let cnCountry = countryMap[j.countryCode] || ""; // 获取中文名
-    let displayCountry = cnCountry ? cnCountry : j.country; // 用于副标题：有中文显中文，没中文显英文
-    if(cnCountry) cnCountry = cnCountry + " "; // 用于正文排版，加空格
+    let cnCountry = countryMap[j.countryCode] || "";
+    let displayCountry = cnCountry ? cnCountry : j.country; // 用于副标题
+    if(cnCountry) cnCountry = cnCountry + " "; // 用于正文
     
     // 风险等级
     const risk = j.fraudScore;
@@ -138,11 +138,10 @@ $httpClient.get(requestOptions, (err, resp, data) => {
     let title = "IPPure 质量报告";
     if (isMonitor) title = "IPPure🔔 IP已变动";
 
-    // 【修改点】构建自定义副标题：国旗 国家 ｜ 风险系数
-    // 例如：🇺🇸 美国 ｜ 42% 中等风险
-    const subtitle = `${flag} ${displayCountry} ｜ ${risk}% ${riskLevel}`;
+    // 【核心修改点】副标题：国旗 国家 ｜ XX分
+    const subtitle = `${flag} ${displayCountry} ｜ ${risk}分`;
 
-    // 正文内容
+    // 正文内容 (依然保留详细信息)
     const content = 
 `${nodeNameDisplay}IP：${j.ip}
 ASN：${j.asOrganization} (AS${j.asn})
