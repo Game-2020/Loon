@@ -145,7 +145,7 @@ $httpClient.get(requestOptions, (err, resp, data) => {
 
     // 标题
     let title = "IPPure 质量报告";
-    if (isMonitor) title = "🔔 IP已变动";
+    if (isMonitor) title = "IPPure🔔 IP已变动";
 
     // 内容排版 (尽量对齐截图风格)
     const content = 
