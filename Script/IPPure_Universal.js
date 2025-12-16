@@ -1,9 +1,9 @@
 /*
- * Loon 脚本：IPPure 全能复刻版 (清爽通知版)
+ * Loon 脚本：IPPure 全能复刻版 (自定义通知版)
  * 功能：
- * 1. 深度复刻 IPPure 网页版 UI 风格
- * 2. 修复通知栏重复显示的问题 (去除副标题)
- * 3. 节点列表点击 / 首页卡片 / 后台监控 全兼容
+ * 1. 深度复刻 IPPure 网页版 UI
+ * 2. 通知栏副标题：显示 [国旗 国家 | 风险分]
+ * 3. 兼容所有模式 (节点点击/卡片/监控)
  */
 
 // --- 1. 环境与参数识别 ---
@@ -101,12 +101,13 @@ $httpClient.get(requestOptions, (err, resp, data) => {
 
     // --- 6. 数据可视化构建 ---
     
-    // 位置
+    // 位置与国旗
     const flag = flagEmoji(j.countryCode);
-    let cnCountry = countryMap[j.countryCode] || "";
-    if(cnCountry) cnCountry = cnCountry + " ";
+    let cnCountry = countryMap[j.countryCode] || ""; // 获取中文名
+    let displayCountry = cnCountry ? cnCountry : j.country; // 用于副标题：有中文显中文，没中文显英文
+    if(cnCountry) cnCountry = cnCountry + " "; // 用于正文排版，加空格
     
-    // 风险
+    // 风险等级
     const risk = j.fraudScore;
     let riskLevel = "低风险";
     let titleColor = "#34C759"; 
@@ -137,7 +138,11 @@ $httpClient.get(requestOptions, (err, resp, data) => {
     let title = "IPPure 质量报告";
     if (isMonitor) title = "IPPure🔔 IP已变动";
 
-    // 内容排版
+    // 【修改点】构建自定义副标题：国旗 国家 ｜ 风险系数
+    // 例如：🇺🇸 美国 ｜ 42% 中等风险
+    const subtitle = `${flag} ${displayCountry} ｜ ${risk}% ${riskLevel}`;
+
+    // 正文内容
     const content = 
 `${nodeNameDisplay}IP：${j.ip}
 ASN：${j.asOrganization} (AS${j.asn})
@@ -147,9 +152,8 @@ IP属性：${propertyLabel}
 IPPure系数：${risk}% ${riskLevel}
 ${riskBar}`;
 
-    // 发送通知 (强制弹窗)
-    // 【修改点】副标题 (第二个参数) 设为空字符串 ""，避免与正文内容重复
-    $notification.post(title, "", content);
+    // 发送通知
+    $notification.post(title, subtitle, content);
     
     $done({
         title: title,
