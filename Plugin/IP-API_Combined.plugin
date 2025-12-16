@@ -1,4 +1,4 @@
-#!name=IP-API 全能合并版
+#!name=IP-API
 #!desc=集成了 IP-API 的所有功能：1. 首页卡片手动测试 2. 后台自动监控IP变动 3. 节点列表点击测试独立节点。
 #!author=User & Gemini
 #!homepage=https://github.com/你的GitHub用户名/你的仓库名
@@ -32,7 +32,7 @@ network-changed script-path=https://raw.githubusercontent.com/Game-2020/Loon/ref
 # 场景 4：节点列表点击 (独立节点测试)
 # ----------------------------------------
 # 自动识别节点点击事件
-generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP-API_Universal.js, timeout=10, tag=IP−API_Node_Check, img-url=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Shield.png, argument=title=IP 质量报告
+#generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP-API_Universal.js, timeout=10, tag=IP−API节点测试, img-url=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Shield.png, argument=title=IP 质量报告
 
 [MitM]
 hostname = ip-api.com
