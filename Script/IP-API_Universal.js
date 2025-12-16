@@ -1,5 +1,5 @@
 /*
- * Loon 脚本：IP-API 全能合并版
+ * Loon 脚本：IP-API 全能合并版 (弹窗修复版)
  * 集成功能：节点点击独立测试 + 首页卡片 + 后台监控
  */
 
@@ -13,16 +13,12 @@ if (typeof $argument !== 'undefined') {
 }
 
 // 判定模式
-// 模式 A: 节点列表点击 (Loon 会自动传入 $environment.params.node)
 const isNodeClick = (typeof $environment !== 'undefined' && $environment.params && $environment.params.node);
-// 模式 B: 静默监控 (传入了 mode=monitor 参数)
 const isMonitor = args.mode === "monitor";
-// 标题 (默认或自定义)
 const scriptTitle = args.title || "IP-API 质量报告";
 
 // --- 2. 准备请求 ---
 const timestamp = new Date().getTime();
-// IP-API 使用 HTTP 协议
 const url = `http://ip-api.com/json/?lang=zh-CN&fields=status,message,country,countryCode,region,regionName,city,zip,lat,lon,timezone,isp,org,as,asname,mobile,proxy,hosting,query&t=${timestamp}`;
 
 const headers = {
@@ -47,7 +43,7 @@ $httpClient.get(requestOptions, (err, resp, data) => {
     // A. 错误处理
     if (err) {
         if (isMonitor) {
-            $done(); // 监控模式静默退出
+            $done();
         } else {
             let errorMsg = "请求失败";
             if (err.error === "DNS error") errorMsg = "DNS 解析失败";
@@ -88,26 +84,22 @@ $httpClient.get(requestOptions, (err, resp, data) => {
         return;
     }
 
-    // --- 4. 监控模式逻辑 (仅在非节点点击模式下生效) ---
-    // 如果是专门测某个节点，不应该更新全局的 IP 变动记录
+    // --- 4. 监控模式逻辑 ---
     if (!isNodeClick) {
         const currentIP = ipInfo.query;
         const lastIP = $persistentStore.read("Loon_IP_Check_Last_IP");
 
         if (isMonitor) {
-            // 监控模式：IP 没变就静默退出
             if (lastIP === currentIP) {
                 $done();
                 return;
             }
             console.log(`[IP-API监控] IP变动: ${lastIP} -> ${currentIP}`);
         }
-        // 更新记录
         $persistentStore.write(currentIP, "Loon_IP_Check_Last_IP");
     }
 
-    // --- 5. 数据计算与格式化 ---
-    // 1. 类型识别
+    // --- 5. 数据计算 ---
     let type = "✅ 是 (原生/家宽)";
     if (ipInfo.hosting) {
         type = "🏢 否 (机房/托管)";
@@ -115,7 +107,6 @@ $httpClient.get(requestOptions, (err, resp, data) => {
         type = "📶 是 (移动流量)";
     }
 
-    // 2. 风险评分模拟
     let riskScore = 0;
     if (ipInfo.proxy) riskScore += 40;
     if (ipInfo.hosting) riskScore += 30;
@@ -124,23 +115,22 @@ $httpClient.get(requestOptions, (err, resp, data) => {
     if (riskScore > 100) riskScore = 100;
 
     let riskText = `风险等级：${riskScore} (参考)`;
-    let titleColor = "#007AFF"; // 蓝
+    let titleColor = "#007AFF"; 
     let icon = "checkmark.seal.fill";
 
     if (riskScore > 60) {
         riskText = `⚠️ 高风险 (${riskScore})`;
-        titleColor = "#FF3B30"; // 红
+        titleColor = "#FF3B30"; 
         icon = "exclamationmark.triangle.fill";
     } else if (riskScore > 30) {
         riskText = `🔶 中等风险 (${riskScore})`;
-        titleColor = "#FFCC00"; // 黄
+        titleColor = "#FFCC00"; 
     } else {
         riskText = `✅ 低风险 (${riskScore})`;
-        titleColor = "#34C759"; // 绿
+        titleColor = "#34C759"; 
     }
 
-    // 3. 构建输出
-    // 标题处理
+    // --- 6. 构建输出 ---
     let finalTitle = scriptTitle;
     let titlePrefix = "";
     if (isMonitor) {
@@ -148,10 +138,7 @@ $httpClient.get(requestOptions, (err, resp, data) => {
         finalTitle = `${titlePrefix}${ipInfo.country}`;
     }
 
-    // 格式化输出 (融合了两种风格，信息最全)
     const flag = flagEmoji(ipInfo.countryCode);
-    
-    // 副标题 (用于通知栏)
     const subtitle = `${flag} ${ipInfo.country} | ${riskScore}分`;
 
     const content = 
@@ -161,12 +148,9 @@ $httpClient.get(requestOptions, (err, resp, data) => {
 IP类型：${type}
 ${riskText}`;
 
-    // 发送通知 (仅监控模式或主页手动点击时发送，列表点击不发以免遮挡)
-    if (!isNodeClick) {
-        $notification.post(finalTitle, subtitle, content);
-    }
+    // --- 关键修改：恢复强制弹窗 ---
+    $notification.post(finalTitle, subtitle, content);
     
-    // 返回给 Loon 界面
     $done({
         title: finalTitle,
         content: content,
