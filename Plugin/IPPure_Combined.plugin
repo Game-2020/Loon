@@ -1,5 +1,6 @@
 #!name=IPPure
 #!desc=集成了 IPPure 的所有功能：1. 首页卡片手动测试 2. 后台自动监控IP变动 3. 节点列表点击测试独立节点。
+#!openUrl=https://ippure.com/
 #!author=User & Gemini
 #!homepage=https://ippure.com/
 #!icon=https://ippure.com/apple-touch-icon.png
