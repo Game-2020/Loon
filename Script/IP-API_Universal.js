@@ -134,7 +134,7 @@ $httpClient.get(requestOptions, (err, resp, data) => {
     let finalTitle = scriptTitle;
     let titlePrefix = "";
     if (isMonitor) {
-        titlePrefix = "🔔 IP已变动: ";
+        titlePrefix = "IP-API🔔 IP已变动: ";
         finalTitle = `${titlePrefix}${ipInfo.country}`;
     }
 
