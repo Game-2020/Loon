@@ -1,0 +1,36 @@
+#!name=IPPure 全能合并版
+#!desc=集成了 IPPure 的所有功能：1. 首页卡片手动测试 2. 后台自动监控IP变动 3. 节点列表点击测试独立节点。
+#!author=User & Gemini
+#!homepage=https://github.com/你的GitHub用户名/你的仓库名
+#!icon=https://ippure.com/apple-touch-icon.png
+#!date=2025-12-15
+
+[Rule]
+# 强制检测接口走代理 (服务于首页卡片和后台监控)
+DOMAIN, my.ippure.com, Proxy
+
+[Script]
+# ----------------------------------------
+# 场景 1：首页卡片 (手动点击)
+# ----------------------------------------
+# 不带 argument，每次点击强制显示结果，更新 IP 记录
+generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IPPure_Universal.js, timeout=10, tag=IPPure手动检测, img-url=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Shield.png
+
+# ----------------------------------------
+# 场景 2：后台监控 (自动运行)
+# ----------------------------------------
+# 带 argument=mode=monitor，只有 IP 变了才弹窗
+# 定时任务 (每分钟)
+cron "0 * * * * *" script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IPPure_Universal.js, img-url=https://ippure.com/apple-touch-icon.png, timeout=10, tag=IPPure定时监控, argument=mode=monitor
+
+# 网络变动触发
+network-changed script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IPPure_Universal.js, img-url=https://ippure.com/apple-touch-icon.png, timeout=10, tag=IPPure变动监控, argument=mode=monitor
+
+# ----------------------------------------
+# 场景 3：节点列表点击 (独立节点测试)
+# ----------------------------------------
+# 脚本会自动识别节点点击事件，劫持流量，不影响监控记录
+generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IPPure_Universal.js, timeout=10, tag=IPPure节点测试, img-url=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Shield.png, argument=title=IP 质量报告
+
+[MitM]
+hostname = my.ippure.com
