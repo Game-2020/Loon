@@ -8,7 +8,7 @@
 
 [Rule]
 # 强制检测接口走代理 (服务于首页卡片和后台监控)
-DOMAIN, my.ippure.com, Proxy
+DOMAIN-SUFFIX,ippure.com, Proxy
 
 [Script]
 # ----------------------------------------
