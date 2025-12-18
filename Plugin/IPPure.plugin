@@ -7,26 +7,7 @@
 #!date=2025-12-15
 
 [Rule]
-# --- IPPure 网页版依赖规则 ---
-# 主站
 DOMAIN-SUFFIX, ippure.com, Proxy
-
-# 核心数据源 (它调用的第三方接口)
-DOMAIN-SUFFIX, ipapi.co, Proxy
-DOMAIN-SUFFIX, ip-api.com, Proxy
-DOMAIN-SUFFIX, ipinfo.io, Proxy
-DOMAIN-SUFFIX, ip2location.io, Proxy
-DOMAIN-SUFFIX, db-ip.com, Proxy
-DOMAIN-SUFFIX, maxmind.com, Proxy
-
-# 辅助检测 (B站用于检测是否国内IP，Cloudflare用于检测CDN节点)
-DOMAIN-SUFFIX, bilibili.com, Proxy
-DOMAIN-SUFFIX, cloudflare.com, Proxy
-
-# WebRTC 相关的 STUN 服务器 (防止 WebRTC 泄露本地 IP)
-DOMAIN-SUFFIX, stun.l.google.com, Proxy
-DOMAIN-KEYWORD, stun, Proxy
-
 
 [Script]
 # ----------------------------------------
