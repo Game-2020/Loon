@@ -22,7 +22,7 @@ generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/
 # ----------------------------------------
 # argument=mode=monitor 表示开启“静默监控模式”
 # 定时自动监控
-cron "0 * * * * *" script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP-API.js, timeout=10, tag=IP−API定时自动监控, img-url=https://www.google.com/s2/favicons?domain=ip-api.com&sz=128, argument=mode=monitor
+#cron "0 * * * * *" script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP-API.js, timeout=10, tag=IP−API定时自动监控, img-url=https://www.google.com/s2/favicons?domain=ip-api.com&sz=128, argument=mode=monitor
 
 # ----------------------------------------
 # 场景 3：网络变动自动检测  (Wi-Fi/数据切换时触发)
