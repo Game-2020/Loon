@@ -1,8 +1,8 @@
-#!name=Scamalytics 全能版 (ipapi.co)
+#!name=Scamalytics
 #!desc=集成 Scamalytics 欺诈分 + ipapi.co 基础信息。支持首页卡片、后台监控、节点点击测试。
-#!openUrl=scamalytics.com
+#!openUrl=https://ipapi.co
 #!author=User & Gemini
-#!homepage=https://ipapi.co
+#!homepage=https://scamalytics.com/ip/api/pricing
 #!icon=https://ipapi.co/favicon.ico
 #!date=2025-12-18
 
