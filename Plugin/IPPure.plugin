@@ -21,7 +21,7 @@ generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/
 # ----------------------------------------
 # 带 argument=mode=monitor，只有 IP 变了才弹窗
 # 定时任务 (每分钟)
-cron "0 * * * * *" script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IPPure.js, img-url=https://ippure.com/apple-touch-icon.png, timeout=10, tag=IPPure定时监控, argument=mode=monitor
+#cron "0 * * * * *" script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IPPure.js, img-url=https://ippure.com/apple-touch-icon.png, timeout=10, tag=IPPure定时监控, argument=mode=monitor
 
 # ----------------------------------------
 # 场景 3：网络变动触发 (Wi-Fi/数据切换时触发)
