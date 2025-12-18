@@ -15,25 +15,25 @@ DOMAIN-SUFFIX, ip-api.com, Proxy
 # 场景 1：首页卡片 (手动点击)
 # ----------------------------------------
 # 强制显示结果
-generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP-API_Universal.js, timeout=10, tag=IP-API手动检测, img-url=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Shield.png
+generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP-API.js, timeout=10, tag=IP-API手动检测, img-url=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Shield.png
 
 # ----------------------------------------
 # 场景 2：后台监控 (自动运行)
 # ----------------------------------------
 # argument=mode=monitor 表示开启“静默监控模式”
 # 定时自动监控
-cron "0 * * * * *" script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP-API_Universal.js, timeout=10, tag=IP−API定时自动监控, img-url=https://www.google.com/s2/favicons?domain=ip-api.com&sz=128, argument=mode=monitor
+cron "0 * * * * *" script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP-API.js, timeout=10, tag=IP−API定时自动监控, img-url=https://www.google.com/s2/favicons?domain=ip-api.com&sz=128, argument=mode=monitor
 
 # ----------------------------------------
 # 场景 3：网络变动自动检测  (Wi-Fi/数据切换时触发)
 # ----------------------------------------
-network-changed script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP-API_Universal.js, timeout=10, tag=IP−API网络变动自动检测, img-url=https://www.google.com/s2/favicons?domain=ip-api.com&sz=128, argument=mode=monitor
+network-changed script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP-API.js, timeout=10, tag=IP−API网络变动自动检测, img-url=https://www.google.com/s2/favicons?domain=ip-api.com&sz=128, argument=mode=monitor
 
 # ----------------------------------------
 # 场景 4：节点列表点击 (独立节点测试)
 # ----------------------------------------
 # 自动识别节点点击事件
-#generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP-API_Universal.js, timeout=10, tag=IP−API节点测试, img-url=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Shield.png, argument=title=IP 质量报告
+#generic script-path=https://raw.githubusercontent.com/Game-2020/Loon/refs/heads/main/Script/IP-API.js, timeout=10, tag=IP−API节点测试, img-url=https://raw.githubusercontent.com/Koolson/Loon-Icon/master/Source/Shield.png, argument=title=IP 质量报告
 
 [MitM]
 hostname = ip-api.com
